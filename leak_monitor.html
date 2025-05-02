@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Leak Monitor</title>
+    <link rel="stylesheet" href="leakMonitor.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Leak Hunter</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#">Data Leak Monitor</a>
+            <a href="CVE_monitor.html">CVE Monitor</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>Data <span>Leak Monitor</span></h1>
+        <p>Monitor real-time leaked data from dark web and public sources.</p>
+
+        <div class="leak-feed">
+            <h2>Latest Leaks:</h2>
+            <div id="leak-list">
+                <!-- Leaks will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Stay informed with the latest data breaches and leaks.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const leakList = document.getElementById('leak-list');
+
+            try {
+                const response = await fetch('http://localhost:3000/api/latest-breaches');
+                const data = await response.json();
+                console.log("Received data:", data);
+
+                const leaks = Array.isArray(data) ? data : data.data || [];
+
+                if (leaks.length === 0) {
+                    leakList.innerHTML = '<p>No leaks available to display.</p>';
+                    return;
+                }
+
+                leaks.forEach((leak, index) => {
+                    console.log(`Leak #${index}:`, leak);
+
+                    const clean = (text) => {
+                        if (!text) return 'Unknown';
+                        return text
+                            .replace(/^["',\s]+|["',\s]+$/g, '') // Clean unwanted quotes and commas
+                            .trim();
+                    };
+
+                    const leakItem = document.createElement('div');
+                    leakItem.classList.add('leak-item');
+
+                    leakItem.innerHTML = `
+                        <p>Source: ${clean(leak["Source"])}</p>
+                        <p>Content: ${clean(leak["Content"])}</p>
+                        <p>Author: ${clean(leak["author"])}</p>
+                        <p>Detection Date: ${clean(leak["Detection Date"])}</p>
+                        <p>Type: ${clean(leak["Type"])}</p>
+                    `;
+
+                    leakList.appendChild(leakItem);
+                });
+            } catch (error) {
+                console.error('Error fetching latest breaches:', error);
+                leakList.innerHTML = '<p>Error loading the leaks.</p>';
+            }
+        });
+    </script>
+
+</body>
+</html>

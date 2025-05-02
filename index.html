@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leak Hunter</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Leak Hunter</h1>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="leak_monitor.html">Data Leak Monitor</a>
+            <a href="CVE_monitor.html">CVE Monitor</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact US</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>Leak <span>Hunter</span></h1>
+        <p>Check if your email or username was compromised</p>
+        <div class="search-box">
+            <input type="text" placeholder="Search for an email or username">
+            <button>&gt;</button>
+        </div>
+    
+        <!-- results-container موجود بس مخفي في البداية -->
+        <div class="results-container" style="display: none;">
+            <h2 id="results-heading"></h2>
+            <div id="results-list"></div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <p>Search over 18 billion publicly leaked records</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

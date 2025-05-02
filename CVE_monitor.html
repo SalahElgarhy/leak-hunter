@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Monitor</title>
+    <link rel="stylesheet" href="CVEMonitor.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>CVE Monitor</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="leak_monitor.html">Data Leak Monitor</a>
+            <a href="CVE_monitor.html">CVE Monitor</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact US</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>CVE <span>Monitor</span></h1>
+        <p>Monitor real-time CVE data from various sources. Stay updated on the latest vulnerabilities, their severity, and affected products.</p>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" id="cve-search" placeholder="Search for CVE Title, Description, or Type...">
+            <button id="search-button">Search</button>
+        </div>
+
+        <!-- Data Container -->
+        <div class="data-container" id="cve-data">
+            <!-- Data will be populated here via JavaScript -->
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 CVE Monitor. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('cve-search');
+            const searchButton = document.getElementById('search-button');
+            const dataContainer = document.getElementById('cve-data');
+
+            // Function to fetch and display data
+            async function fetchCVEs(searchTerm = '') {
+                try {
+                    const url = searchTerm 
+                        ? `http://localhost:3000/cve-data?search=${encodeURIComponent(searchTerm)}`
+                        : 'http://localhost:3000/cve-data';
+
+                    console.log('Fetching URL:', url);
+                    const response = await fetch(url);
+                    console.log('Response Status:', response.status);
+                    const cves = await response.json();
+                    console.log('Response Data:', cves);
+
+                    if (!response.ok) {
+                        throw new Error(cves.message || 'Failed to fetch CVE data');
+                    }
+
+                    // Clear previous results
+                    dataContainer.innerHTML = '';
+
+                    if (cves.length === 0) {
+                        dataContainer.innerHTML = '<p>No CVE data found.</p>';
+                        return;
+                    }
+
+                    // Display each CVE
+                    cves.forEach(cve => {
+                        const cveItem = document.createElement('div');
+                        cveItem.classList.add('cve-item');
+
+                        // Extract only the CVE ID from the title
+                        const cveId = (cve.Title || '').split(' - ')[0];
+
+                        cveItem.innerHTML = `
+                            <h2>${cveId}</h2>
+                            <p><strong>Content:</strong> ${cve.Content || 'No content available'}</p>
+                            <p><strong>Description:</strong> ${cve.Description || 'No description available'}</p>
+                            <p><strong>Severity:</strong> ${cve.Severity || 'Unknown'}</p>
+                            <p><strong>Published:</strong> ${cve.Published || 'Unknown'}</p>
+                            <p><strong>Detection Date:</strong> ${cve["Detection Date"] || 'Unknown'}</p>
+                        `;
+
+                        dataContainer.appendChild(cveItem);
+                    });
+                } catch (error) {
+                    console.error('Error fetching CVE data:', error);
+                    dataContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+                }
+            }
+
+            // Fetch data on page load
+            fetchCVEs();
+
+            // Add search functionality
+            searchButton.addEventListener('click', () => {
+                const searchTerm = searchInput.value.trim();
+                fetchCVEs(searchTerm);
+            });
+
+            // Enable search by pressing Enter
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* ----------------------------- Global Settings ---------------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ----------------------------- Header Styles ---------------------------- */
+header {
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    padding: 15px 30px;
+    border-bottom: 1px solid #374151;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+header .logo:hover {
+    transform: scale(1.1);
+}
+
+header nav {
+    display: flex;
+    gap: 25px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #9ca3af;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #60a5fa;
+}
+
+/* ---------------------------- Main Container ----------------------------- */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+}
+
+.main-container h1 {
+    font-size: 3rem;
+    color: #e5e7eb;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.main-container h1 span {
+    color: #3498db;
+}
+
+.main-container p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #9ca3af;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+/* ---------------------------- Leak Feed ----------------------------- */
+.leak-feed {
+    background: #2c3e50;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.leak-feed h2 {
+    font-size: 1.8rem;
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+.leak-item {
+    background: #34495e;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    color: #e5e7eb;
+    text-align: left;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.leak-item:hover {
+    background-color: #3498db;
+    color: #111827;
+    transform: scale(1.02);
+}
+
+.leak-item p {
+    margin: 5px 0;
+    font-size: 1rem;
+    word-wrap: break-word;
+}
+
+/* ------------------------------ Footer ------------------------------ */
+footer {
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    padding: 20px;
+    text-align: center;
+    color: #9ca3af;
+    border-top: 1px solid #374151;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+footer:hover {
+    background-color: #34495e;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
